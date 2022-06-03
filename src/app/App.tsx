@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import logo from './assets/logo.svg'
 import './assets/css/App.css'
+import Inicio from '../modulos/exemplos/telas/Inicio'
+import Sobre from '../modulos/exemplos/telas/Sobre'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,29 +18,15 @@ function App() {
             count is: {count}
           </button>
         </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
       </header>
+      <nav>
+        <Link to="/" style={{ marginRight: 20 }}>Inicio</Link>
+        <Link to="/sobre">Sobre</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="sobre" element={<Sobre />} />
+      </Routes>
     </div>
   )
 }
