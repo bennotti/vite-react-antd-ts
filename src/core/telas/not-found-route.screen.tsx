@@ -2,7 +2,9 @@ import { Button, Result } from 'antd';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFoundRouteScreen: FC = () => {
+
+
+export const NotFoundRouteScreen: FC = () => {
   return (
     <Result
       status='404'
@@ -18,9 +20,3 @@ const NotFoundRouteScreen: FC = () => {
     />
   );
 };
-
-export {
-  NotFoundRouteScreen,
-};
-
-export default NotFoundRouteScreen;
