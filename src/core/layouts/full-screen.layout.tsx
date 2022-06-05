@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Avatar, Breadcrumb, Button, Col, Descriptions, Layout, Menu, PageHeader, Row } from 'antd';
 import { FC, ReactNode, useCallback, useState } from 'react';
 import type { MenuProps } from 'antd';
 import {
@@ -51,12 +51,25 @@ export const FullScreenLayout: FC<FullScreenLayoutProps> = ({ children }) => {
     getItem('Sub menu', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
   ];
   return (
+    <Layout>
+    <Header style={{ position: 'fixed', zIndex: 1, width: '100%', paddingLeft: collapsed ? 80 : 200 }}>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={['2']}
+        items={new Array(3).fill(null).map((_, index) => ({
+          key: String(index + 1),
+          label: `nav ${index + 1}`,
+        }))}
+      />
+    </Header>
     <Layout className='fullScreenLayout' hasSider>
       <Sider
         style={{
           overflow: 'auto',
           height: '100vh',
           position: 'fixed',
+          zIndex: 1,
           left: 0,
           top: 0,
           bottom: 0,
@@ -69,17 +82,6 @@ export const FullScreenLayout: FC<FullScreenLayoutProps> = ({ children }) => {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} items={items}/>
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: collapsed ? 80 : 200 }}>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            items={new Array(3).fill(null).map((_, index) => ({
-              key: String(index + 1),
-              label: `nav ${index + 1}`,
-            }))}
-          />
-        </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial', paddingTop: 60 }}>
           <Breadcrumb >
             <Breadcrumb.Item><HomeOutlined /></Breadcrumb.Item>
@@ -89,6 +91,7 @@ export const FullScreenLayout: FC<FullScreenLayoutProps> = ({ children }) => {
         </Content>
       <Footer style={{ textAlign: 'center' }}>POC - Vite + ReactJs + Antd + Typescript</Footer>
       </Layout>
+    </Layout>
     </Layout>
   );
 };

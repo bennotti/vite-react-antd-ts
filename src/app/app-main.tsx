@@ -1,8 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 
-import { Spin } from 'antd';
-
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import './assets/css/app.css'
 import { AppRoutes } from './app-routes';
@@ -12,9 +10,10 @@ import { selectCurrentLayout } from './selectors/layout.selector';
 import { tryRestoreAuth } from '../modulos/autenticacao/thunks/autenticacao.thunk';
 import { selectIsRestoringAuth } from '../modulos/autenticacao/selectors/autenticacao.selector';
 import { AppDispatch } from './store';
+import { LoadingCentered } from '../core/componentes/loading-centered';
 
 const App: React.FC = () => {
-  const isRestoring = useSelector(selectIsRestoringAuth);
+  const isLoading = useSelector(selectIsRestoringAuth);
   const currentLayout = useSelector(selectCurrentLayout);
 
   const dispatch : AppDispatch = useDispatch();
@@ -24,7 +23,6 @@ const App: React.FC = () => {
   }, []);
 
   const renderBrowserContent = () => {
-    console.log(currentLayout);
     if (currentLayout === 'application') {
       return (
         <FullScreenLayout>
@@ -35,11 +33,9 @@ const App: React.FC = () => {
     return <AppRoutes />;
   }
   const renderContent = () => {
-    if (isRestoring) {
+    if (isLoading) {
       return (
-        <div className={'centered'}>
-          <Spin />
-        </div>
+        <LoadingCentered />
       );
     }
     return <BrowserRouter>{renderBrowserContent()}</BrowserRouter>;

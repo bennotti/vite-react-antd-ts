@@ -8,6 +8,7 @@
 
 .fullScreenLayout {
   min-height: 100vh;
+  min-width: 100vw;
 }
 
 .fullScreenLayout .contentWrapper {

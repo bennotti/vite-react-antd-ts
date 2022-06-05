@@ -40,6 +40,10 @@ const autenticacaoSlice = createSlice({
       state.status = 'ERROR';
     });
 
+    builder.addCase(tryLogout.pending, state => {
+      state.status = 'RESTORING';
+    });
+
     builder.addCase(tryRestoreAuth.pending, state => {
       state.status = 'RESTORING';
     });

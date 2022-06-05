@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { Layout, Form, Input, Button, Row, Col, Alert } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Layout, Form, Input, Button, Row, Col, Alert, Avatar, Space } from 'antd';
+import { AntDesignOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { AnyObject } from '../../../core/types';
 import { AppDispatch } from '../../../app/store';
 import { useDispatch } from 'react-redux';
@@ -10,12 +10,12 @@ import { PayloadAction } from '@reduxjs/toolkit';
 const { Content, Footer } = Layout;
 
 export const LoginScreen: FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const dispatch : AppDispatch = useDispatch();
   const onFinish = async (values: AnyObject) => {
     setShowAlert(false);
-    console.log('Success:', values);
-    
+    setLoading(true);
     const response: PayloadAction<{
       accessToken: string;
       payload: AnyObject
@@ -26,6 +26,7 @@ export const LoginScreen: FC = () => {
       accessToken: string;
       payload: AnyObject
     }>;
+    setLoading(false);
     setShowAlert(response.type === tryLogin.rejected.type);
   };
 
@@ -43,41 +44,52 @@ export const LoginScreen: FC = () => {
   }
   const [form] = Form.useForm();
   return (
-    <Layout>
+    <Layout className='fullScreenLayout'>
       <Row>
-        <Col span={12} offset={6}>
-          <Content style={{ padding: '0 50px' }}>
+        <Col span={8} offset={8}>
+          <Content style={{ padding: '50px 0px' }}>
             <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
               <Content style={{ padding: '0 24px' }}>
+                <Row>
+                  <Col span={24} style={{ textAlign:'center' }}>
+                    <Avatar
+                      size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                      icon={<AntDesignOutlined />}
+                    />
+                  </Col>
+                  <Col span={24} style={{ textAlign:'center' }}>
+                    PoC
+                  </Col>
+                </Row>
                 {renderAlert()}
                 <Form
                   form={form}
-                  layout="vertical"
+                  layout='vertical'
                   requiredMark={'optional'}
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
-                  autoComplete="off"
+                  autoComplete='off'
                 >
                   <Form.Item
-                    label="Username"
-                    name="username"
+                    label='Usuário'
+                    name='username'
                     required
-                    tooltip="This is a required field"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    tooltip='Tente o usuário "teste"'
+                    rules={[{ required: true, message: 'O Usuário deve ser informado!' }]}
                   >
-                    <Input placeholder="input placeholder" />
+                    <Input placeholder='input placeholder' />
                   </Form.Item>
                   <Form.Item
-                    label="Password"
-                    name="password"
+                    label='Senha'
+                    name='password'
                     required
-                    tooltip={{ title: 'Tooltip with customize icon', icon: <InfoCircleOutlined /> }}
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    tooltip={{ title: 'Tente a senha "teste123"', icon: <InfoCircleOutlined /> }}
+                    rules={[{ required: true, message: 'A senha deve ser informada!' }]}
                   >
-                    <Input.Password placeholder="input placeholder" />
+                    <Input.Password placeholder='input placeholder' />
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">Submit</Button>
+                    <Button loading={loading} type='primary' htmlType='submit'>Entrar</Button>
                   </Form.Item>
                 </Form>
               </Content>

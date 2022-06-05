@@ -36,7 +36,7 @@ export function createApplicationStore() {
   });
 }
 
-const store = createApplicationStore();
+export const store = createApplicationStore();
 
 export type RootState = ReturnType<typeof store.getState>
 
